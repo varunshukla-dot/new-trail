@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Our Love Journey 💖</title>
+<title>Valentine Journey</title>
 
 <style>
 body{
@@ -12,69 +12,32 @@ body{
   padding:20px;
 }
 
-.slide{
-  display:none;
-}
-
-.slide.active{
-  display:block;
-}
-
 img{
   width:320px;
   border-radius:20px;
-  box-shadow:0 0 10px #ff4d6d;
   margin:20px;
-}
-
-button{
-  padding:10px 20px;
-  font-size:16px;
-  border:none;
-  border-radius:10px;
-  background:#ff4d6d;
-  color:white;
-  cursor:pointer;
 }
 </style>
 </head>
 
 <body>
 
-<div id="slide1" class="slide active">
-  <h1>Hey My Love 💕</h1>
-  <p>Let’s begin our little journey…</p>
-  <button onclick="show(2)">Start</button>
-</div>
+<h1>Hey My Love 💕</h1>
+<p>If you can see this page, your site is working.</p>
 
-<div id="slide2" class="slide">
-  <h2>Our Memory 🌸</h2>
-  <img src="figure4.jpg" alt="Photo 1">
-  <br>
-  <button onclick="show(3)">Next</button>
-</div>
+<h2>Photo 1</h2>
+<img src="figure1.jpg" alt="Photo 1">
 
-<div id="slide3" class="slide">
-  <h2>Another Special Moment 💞</h2>
-  <img src="figure5.jpg" alt="Photo 2">
-  <br>
-  <button onclick="show(4)">Next</button>
-</div>
+<h2>Photo 2</h2>
+<img src="figure2.jpg" alt="Photo 2">
 
-<div id="slide4" class="slide">
-  <h1>Will you be my Valentine? 💘</h1>
-  <button onclick="document.getElementById('ans').innerText='YES! I love you 💖'">
-    YES
-  </button>
-  <p id="ans"></p>
-</div>
+<h2>Photo 3</h2>
+<img src="figure3.jpg" alt="Photo 3">
 
-<script>
-function show(n){
-  document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
-  document.getElementById('slide'+n).classList.add('active');
-}
-</script>
+<h2>Photo 4</h2>
+<img src="figure4.jpg" alt="Photo 4">
+
+<p>— If all images show, we’ll build the slideshow next 💖</p>
 
 </body>
 </html>
