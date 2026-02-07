@@ -1,43 +1,560 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Valentine Journey</title>
-
-<style>
-body{
-  text-align:center;
-  background:#ffe6ef;
-  font-family:Arial, sans-serif;
-  padding:20px;
-}
-
-img{
-  width:320px;
-  border-radius:20px;
-  margin:20px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine? 💘</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💝</text></svg>">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            overflow: hidden;
+            padding: 20px;
+            animation: bgPulse 10s infinite alternate;
+        }
+        
+        @keyframes bgPulse {
+            0% { background: linear-gradient(135deg, #ffafbd, #ffc3a0); }
+            100% { background: linear-gradient(135deg, #ffc3a0, #ffafbd); }
+        }
+        
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .heart {
+            position: absolute;
+            color: #ff4d79;
+            font-size: 24px;
+            animation: float 6s linear infinite;
+            opacity: 0;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(110vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            width: 100%;
+        }
+        
+        .box {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 50px 40px;
+            border-radius: 25px;
+            box-shadow: 
+                0 20px 40px rgba(255, 77, 121, 0.3),
+                0 0 0 10px rgba(255, 255, 255, 0.1),
+                0 0 0 20px rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            animation: boxFloat 3s ease-in-out infinite alternate;
+        }
+        
+        @keyframes boxFloat {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-10px); }
+        }
+        
+        h1 {
+            color: #e6005c;
+            font-size: 3em;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            line-height: 1.3;
+            animation: textGlow 2s infinite alternate;
+        }
+        
+        @keyframes textGlow {
+            0% { text-shadow: 0 0 10px rgba(255, 77, 121, 0.3); }
+            100% { text-shadow: 0 0 20px rgba(255, 77, 121, 0.6); }
+        }
+        
+        .message {
+            font-size: 1.2em;
+            color: #666;
+            margin-bottom: 35px;
+            line-height: 1.6;
+            padding: 0 20px;
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin: 40px 0;
+            position: relative;
+            min-height: 80px;
+        }
+        
+        button {
+            padding: 18px 50px;
+            font-size: 1.3em;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            min-width: 150px;
+            position: relative;
+            overflow: hidden;
+            z-index: 3;
+        }
+        
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: 0.5s;
+        }
+        
+        button:hover::before {
+            left: 100%;
+        }
+        
+        #yes {
+            background: linear-gradient(45deg, #ff4d79, #e6005c);
+            color: white;
+            box-shadow: 0 10px 20px rgba(255, 77, 121, 0.4);
+        }
+        
+        #yes:hover {
+            transform: scale(1.08);
+            box-shadow: 0 15px 30px rgba(255, 77, 121, 0.6);
+        }
+        
+        #yes:active {
+            transform: scale(0.98);
+        }
+        
+        #no {
+            background: linear-gradient(45deg, #999, #666);
+            color: white;
+            position: relative;
+            transition: all 0.1s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        #no:hover {
+            background: linear-gradient(45deg, #888, #555);
+        }
+        
+        #gif {
+            display: none;
+            margin-top: 40px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(30px) scale(0.9); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+        
+        .celebration-title {
+            color: #ff4d79;
+            margin-bottom: 25px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .gif-container {
+            position: relative;
+            display: inline-block;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .gif-container img {
+            width: 100%;
+            max-width: 320px;
+            height: auto;
+            display: block;
+        }
+        
+        .final-message {
+            margin-top: 25px;
+            font-size: 1.4em;
+            color: #ff4d79;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .click-count {
+            margin-top: 15px;
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 100;
+            font-size: 24px;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 600px) {
+            .box {
+                padding: 30px 25px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .message {
+                font-size: 1.1em;
+                padding: 0 10px;
+            }
+            
+            button {
+                padding: 16px 40px;
+                font-size: 1.2em;
+                min-width: 130px;
+            }
+            
+            .buttons-container {
+                gap: 15px;
+            }
+            
+            .celebration-title {
+                font-size: 2em;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="hearts" id="hearts"></div>
+    
+    <div class="container">
+        <div class="box" id="mainBox">
+            <h1>Will You Be My Valentine? 💝</h1>
+            <p class="message">I've been thinking about this all day... Every time I see your smile, my heart skips a beat. Will you make me the happiest person and be my Valentine? 🌹</p>
+            
+            <div class="buttons-container">
+                <button id="yes">Yes! 💖</button>
+                <button id="no">No 😢</button>
+            </div>
+            
+            <div id="gif">
+                <h2 class="celebration-title">Yay! You Said Yes! 🎉</h2>
+                <div class="gif-container">
+                    <img src="https://media.giphy.com/media/I0MYt5jPR6QX5pnqM/giphy.gif" alt="Happy Celebration">
+                </div>
+                <p class="final-message">You just made my entire year! Can't wait to celebrate with you! 💕</p>
+                <p class="click-count">This message will self-destruct in... just kidding, it's forever! 💘</p>
+            </div>
+            
+            <div class="footer">
+                Made with 💖 for someone special
+            </div>
+        </div>
+    </div>
 
-<h1>Hey My Love 💕</h1>
-<p>If you can see this page, your site is working.</p>
+    <div class="music-control" id="musicBtn">
+        <span id="musicIcon">🔇</span>
+    </div>
 
-<h2>Photo 1</h2>
-<img src="figure1.jpg" alt="Photo 1">
+    <!-- CHANGED: Added autoplay and muted attributes, and renamed file -->
+    <audio id="bgMusic" loop autoplay muted>
+        <source src="dooron.mp3" type="audio/mpeg">
+    </audio>
 
-<h2>Photo 2</h2>
-<img src="figure2.jpg" alt="Photo 2">
-
-<h2>Photo 3</h2>
-<img src="figure3.jpg" alt="Photo 3">
-
-<h2>Photo 4</h2>
-<img src="figure4.jpg" alt="Photo 4">
-
-<p>— If all images show, we’ll build the slideshow next 💖</p>
-
+    <script>
+        const noButton = document.getElementById("no");
+        const yesButton = document.getElementById("yes");
+        const gifDiv = document.getElementById("gif");
+        const heartsContainer = document.getElementById("hearts");
+        const mainBox = document.getElementById("mainBox");
+        const bgMusic = document.getElementById("bgMusic");
+        const musicBtn = document.getElementById("musicBtn");
+        const musicIcon = document.getElementById("musicIcon");
+        
+        let noClicks = 0;
+        let isMusicPlaying = false;
+        
+        // Create floating hearts
+        function createHearts(count = 15) {
+            const heartEmojis = ['💖', '💕', '💘', '💝', '💓', '💗', '💞'];
+            for (let i = 0; i < count; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.className = 'heart';
+                    heart.innerHTML = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDelay = Math.random() * 4 + 's';
+                    heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+                    heartsContainer.appendChild(heart);
+                    
+                    // Remove heart after animation
+                    setTimeout(() => {
+                        if (heart.parentNode) {
+                            heart.remove();
+                        }
+                    }, 6000);
+                }, i * 300);
+            }
+        }
+        
+        // Initial hearts
+        createHearts(20);
+        setInterval(() => createHearts(5), 3000);
+        
+        // Make No button run away
+        noButton.addEventListener("mouseover", () => {
+            const maxX = window.innerWidth - noButton.offsetWidth - 50;
+            const maxY = window.innerHeight - noButton.offsetHeight - 50;
+            const x = Math.random() * maxX + 25;
+            const y = Math.random() * maxY + 25;
+            
+            noButton.style.position = "fixed";
+            noButton.style.left = x + "px";
+            noButton.style.top = y + "px";
+            noButton.style.transform = "scale(0.9)";
+            noButton.style.transition = "transform 0.2s";
+            
+            // Add shake effect
+            setTimeout(() => {
+                noButton.style.transform = "scale(1)";
+            }, 200);
+            
+            // Change text sometimes
+            if (Math.random() > 0.7) {
+                const texts = ["Try again!", "Catch me!", "Too slow!", "Nope!", "Maybe?", "Think twice!"];
+                noButton.textContent = texts[Math.floor(Math.random() * texts.length)];
+                setTimeout(() => {
+                    noButton.textContent = "No 😢";
+                }, 1000);
+            }
+        });
+        
+        // No button click handler
+        noButton.addEventListener("click", () => {
+            noClicks++;
+            
+            if (noClicks === 1) {
+                alert("Are you sure? 😢 Give it another thought!");
+                noButton.textContent = "Really? 😭";
+            } else if (noClicks === 2) {
+                alert("I'll be really sad if you say no... 🥺");
+                noButton.textContent = "Maybe? 🤔";
+            } else if (noClicks === 3) {
+                alert("I promise I'll make it worth your while! 🥰");
+                noButton.textContent = "Hmm... ❤️";
+                yesButton.style.transform = "scale(1.1)";
+                yesButton.style.boxShadow = "0 20px 40px rgba(255, 77, 121, 0.8)";
+            } else {
+                alert("The 'No' button is getting tired of being clicked... why not try 'Yes'? 😉");
+                noButton.textContent = "Okay fine!";
+                setTimeout(() => {
+                    noButton.style.display = "none";
+                    alert("Just kidding! But seriously... click YES! 💘");
+                }, 1000);
+            }
+            
+            setTimeout(() => {
+                noButton.textContent = "No 😢";
+            }, 2000);
+        });
+        
+        // Yes button click - Celebration!
+        yesButton.addEventListener("click", () => {
+            // Show celebration
+            gifDiv.style.display = "block";
+            yesButton.style.display = "none";
+            noButton.style.display = "none";
+            document.querySelector("h1").innerHTML = "You're My Valentine! 💕🎊";
+            document.querySelector(".message").innerHTML = "This is the happiest moment of my life! I promise to make every day special for you. 🌹✨";
+            
+            // Explosion of hearts
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    createHearts(1);
+                }, i * 30);
+            }
+            
+            // Change box animation
+            mainBox.style.animation = "boxFloat 0.5s ease-in-out infinite alternate";
+            
+            // Play celebration sound
+            try {
+                const audio = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-happy-crowd-laugh-464.mp3');
+                audio.volume = 0.5;
+                audio.play();
+            } catch (e) {
+                console.log("Audio error:", e);
+            }
+            
+            // Confetti effect
+            setTimeout(() => {
+                for (let i = 0; i < 50; i++) {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'heart';
+                    confetti.innerHTML = ['🎉', '🎊', '✨', '🌟', '💫'][Math.floor(Math.random() * 5)];
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                    heartsContainer.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        if (confetti.parentNode) {
+                            confetti.remove();
+                        }
+                    }, 3000);
+                }
+            }, 500);
+        });
+        
+        // CHANGED: Auto-play music on page load with a workaround
+        window.addEventListener('load', function() {
+            // Try to play music automatically
+            setTimeout(function() {
+                bgMusic.muted = false;
+                bgMusic.volume = 0.3;
+                
+                // Create a promise to play the audio
+                const playPromise = bgMusic.play();
+                
+                if (playPromise !== undefined) {
+                    playPromise.then(() => {
+                        // Audio played successfully
+                        isMusicPlaying = true;
+                        musicIcon.textContent = "🎶";
+                        console.log("Music started playing automatically");
+                    }).catch(error => {
+                        // Auto-play was prevented
+                        console.log("Autoplay prevented. User interaction required.");
+                        musicIcon.textContent = "▶️";
+                        musicIcon.title = "Click to start music";
+                        
+                        // Show a subtle hint
+                        setTimeout(() => {
+                            const hint = document.createElement('div');
+                            hint.innerHTML = "🎵 Click the music button to start the song!";
+                            hint.style.position = 'fixed';
+                            hint.style.bottom = '80px';
+                            hint.style.right = '20px';
+                            hint.style.background = 'rgba(255,255,255,0.9)';
+                            hint.style.padding = '8px 12px';
+                            hint.style.borderRadius = '10px';
+                            hint.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+                            hint.style.zIndex = '100';
+                            hint.style.fontSize = '14px';
+                            hint.style.color = '#ff4d79';
+                            document.body.appendChild(hint);
+                            
+                            setTimeout(() => {
+                                hint.remove();
+                            }, 5000);
+                        }, 2000);
+                    });
+                }
+            }, 1000); // 1 second delay to increase chances of autoplay
+        });
+        
+        // Music control button
+        musicBtn.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                musicIcon.textContent = "🔇";
+                isMusicPlaying = false;
+            } else {
+                bgMusic.volume = 0.3;
+                bgMusic.play().then(() => {
+                    isMusicPlaying = true;
+                    musicIcon.textContent = "🎶";
+                }).catch(error => {
+                    console.log("Failed to play music:", error);
+                    alert("Please click anywhere on the page first, then click the music button.");
+                });
+            }
+        });
+        
+        // Instructions tooltip
+        setTimeout(() => {
+            if (!gifDiv.style.display) {
+                const tooltip = document.createElement('div');
+                tooltip.innerHTML = "💡 Hint: The 'No' button is shy! Try to click 'Yes' instead!";
+                tooltip.style.position = 'fixed';
+                tooltip.style.bottom = '80px';
+                tooltip.style.right = '20px';
+                tooltip.style.background = 'white';
+                tooltip.style.padding = '10px 15px';
+                tooltip.style.borderRadius = '10px';
+                tooltip.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+                tooltip.style.zIndex = '100';
+                tooltip.style.maxWidth = '200px';
+                tooltip.style.fontSize = '14px';
+                document.body.appendChild(tooltip);
+                
+                setTimeout(() => {
+                    tooltip.remove();
+                }, 5000);
+            }
+        }, 10000);
+    </script>
 </body>
 </html>
